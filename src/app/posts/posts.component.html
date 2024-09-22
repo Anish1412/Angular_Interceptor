@@ -1,0 +1,40 @@
+<h1 class="text-center">POSTS</h1>
+<div class="row justify-content-center">
+    <div class="col-md-4 p-2 mt-4">
+        <div class="alert alert-danger my-4" *ngIf="error">{{error}}</div>
+        <form [formGroup]="Posts" class="bg-dark p-4 rounded-5" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="t" class="form-label text-white"><h5>Title</h5></label>
+                <input type="text" name="title" id="t" formControlName="title" class="form-control" placeholder="Enter title here...">
+                <small class="text-danger" *ngIf="Posts.get('title')?.invalid && Posts.get('title')?.touched">Enter title here...</small>
+            </div>
+            <div class="form-group">
+                <label for="c" class="form-label text-white mt-3"><h5>Content</h5></label>
+                <textarea name="content" id="c" cols="30" rows="5" formControlName="content" class="form-control" placeholder="Enter Content here..."></textarea>
+                <small class="text-danger" *ngIf="Posts.get('content')?.invalid && Posts.get('content')?.touched">Enter Content here...</small>
+            </div>
+            <div class="row justify-content-center mt-3">
+                <div class="col-md-5">
+                    <button type="submit" class="btn btn-success mx-2" [disabled]="Posts.invalid">Submit</button>
+                    <button type="reset" class="btn btn-danger">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <table class="table table-responsive table-bordered table-dark mt-5">
+            <thead>
+                <tr class="text-center">
+                    <th>Title</th>
+                    <th>Content</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                <tr *ngFor="let p of posts" class="text-center">
+                    <td>{{ p.title }}</td>
+                    <td>{{ p.content }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

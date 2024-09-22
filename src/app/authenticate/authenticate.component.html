@@ -1,0 +1,30 @@
+<div *ngIf="loading" class="text-center my-4">
+    <app-loading-spinner></app-loading-spinner>
+</div>
+
+<h1 class="text-center mt-5" *ngIf="!loading">{{isFormType}} Form</h1>
+<div class="row justify-content-center" style="margin-top: 1em;">
+    <div class="col-md-4">
+        <div class="alert alert-danger my-4" *ngIf="error">{{error}}</div>
+        <form #InterceptForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="!loading" class="card bg-dark p-4 rounded-5">
+            <div class="form-group">
+                <label for="e" class="form-label text-white fs-5 fw-semibold">Email</label>
+        <!-- Property names should be same which is in firebase AuthRestAPI for signup with email & password -->
+                <input type="email" name="email" ngModel #Email="ngModel" email id="e" class="form-control" placeholder="Enter email here..." required>
+                <small class="text-danger" *ngIf="Email.touched && Email.invalid && Email.dirty"> Email is invalid...</small>
+                <small class="text-danger" *ngIf="Email.touched && Email?.errors?.['required']">Email is required...</small>
+            </div>
+            <div class="form-group">
+                <label for="p" class="form-label text-white fs-5 fw-semibold mt-3">Password</label>
+                <input type="password" name="password" ngModel #Password="ngModel" id="p" class="form-control" placeholder="Enter password here..." minlength="6" required>
+                <small class="text-danger">{{ passwordError(Password) }}</small>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-7 mt-4">
+                    <button type="submit" class="btn btn-success mx-2" [disabled]="InterceptForm.invalid">{{isFormType}}</button>
+                    <button type="button" class="btn btn-primary" (click)="formChange()">Switch to {{isSignUp ? "Login" : "Signup"}}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
